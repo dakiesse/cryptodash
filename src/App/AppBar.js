@@ -21,7 +21,7 @@ const NavigationButton = ({ navkey, name }) => (
   <AppContext.Consumer>
     {(context) => (
       <NavigationButtonStyled active={context.page === navkey}
-                          onClick={() => context.navigate(navkey)}>
+                              onClick={() => context.navigate(navkey)}>
         {name}
       </NavigationButtonStyled>
     )}
