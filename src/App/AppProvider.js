@@ -1,4 +1,5 @@
 import React from 'react'
+import cc from 'cryptocompare'
 
 export const AppContext = React.createContext()
 
@@ -10,6 +11,12 @@ export class AppProvider extends React.Component {
 
   state = {
     ...this.getSavedState(),
+  }
+
+  async componentDidMount () {
+    const coinList = (await cc.coinList()).Data
+
+    this.setState({ coinList })
   }
 
   actionNavigate = (page) => this.setState({ page })

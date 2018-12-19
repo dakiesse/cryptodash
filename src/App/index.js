@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { AppProvider } from './AppProvider'
 import AppLayout from './AppLayout'
+import Content from '../Shared/Content'
 import AppBar from './AppBar'
 import Settings from '../Settings'
 import './App.css'
-import { AppProvider } from './AppProvider'
 
 class Index extends Component {
   render () {
@@ -11,7 +12,9 @@ class Index extends Component {
       <AppLayout>
         <AppProvider>
           <AppBar/>
-          <Settings/>
+          <Content>
+            <Settings/>
+          </Content>
         </AppProvider>
       </AppLayout>
     )
