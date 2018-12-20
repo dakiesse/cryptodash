@@ -50,7 +50,6 @@ export class AppProvider extends React.Component {
     const restoredState = JSON.parse(localStorage.getItem('state'))
 
     if (restoredState !== null && restoredState.favorites) {
-      debugger
       restoredState.favorites = new Set(restoredState.favorites)
     }
 
