@@ -7,6 +7,7 @@ export class AppProvider extends React.Component {
   defaultState = {
     page: 'dashboard',
     isFirstVisit: true,
+    coinList: null,
   }
 
   state = {
