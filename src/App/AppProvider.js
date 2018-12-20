@@ -2,17 +2,17 @@ import React from 'react'
 import cc from 'cryptocompare'
 
 export const AppContext = React.createContext()
+const MAX_FAVORITES = 10
 
 export class AppProvider extends React.Component {
   defaultState = {
     page: 'dashboard',
     isFirstVisit: true,
     coinList: null,
+    favorites: new Set(['BTC', 'ETH', 'DOGE', 'LTC', 'XRP'])
   }
 
-  state = {
-    ...this.getSavedState(),
-  }
+  state = { ...this.getSavedState() }
 
   async componentDidMount () {
     const coinList = (await cc.coinList()).Data
@@ -26,15 +26,41 @@ export class AppProvider extends React.Component {
     this.setState({ isFirstVisit: false }, this.persistState)
   }
 
-  getSavedState () {
-    const state = JSON.parse(localStorage.getItem('state'))
+  actionHasFavorites = (key) => {
+    return this.state.favorites.has(key)
+  }
 
-    if (!state) return this.defaultState
-    return state
+  actionAddCoin = (coinKey) => {
+    let favorites = new Set(this.state.favorites)
+    if (favorites.size < MAX_FAVORITES) {
+      favorites.delete(coinKey) // for sending to the end
+      favorites.add(coinKey)
+
+      this.setState({ favorites })
+    }
+  }
+
+  actionRemoveCoin = (coinKey) => {
+    let favorites = new Set(this.state.favorites)
+    favorites.delete(coinKey)
+    this.setState({ favorites })
+  }
+
+  getSavedState () {
+    const restoredState = JSON.parse(localStorage.getItem('state'))
+
+    if (restoredState !== null && restoredState.favorites) {
+      debugger
+      restoredState.favorites = new Set(restoredState.favorites)
+    }
+
+    return { ...this.defaultState, ...restoredState }
   }
 
   persistState () {
-    const json = JSON.stringify(this.state)
+    const { favorites, isFirstVisit } = this.state
+    const json = JSON.stringify({ favorites: Array.from(favorites), isFirstVisit })
+
     localStorage.setItem('state', json)
   }
 
@@ -43,6 +69,9 @@ export class AppProvider extends React.Component {
       ...this.state,
       navigate: this.actionNavigate,
       setFavorites: this.actionSetFavorites,
+      hasFavorites: this.actionHasFavorites,
+      addCoin: this.actionAddCoin,
+      removeCoin: this.actionRemoveCoin,
     }
   }
 
