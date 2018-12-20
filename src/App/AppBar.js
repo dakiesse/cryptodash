@@ -33,6 +33,6 @@ export default () => (
     <Logo>CryptoDash</Logo>
     <div/>
     <NavigationButton navkey="dashboard" name="Dashboard"/>
-    <NavigationButton navkey="setting" name="Setting"/>
+    <NavigationButton navkey="settings" name="Settings"/>
   </Bar>
 )
