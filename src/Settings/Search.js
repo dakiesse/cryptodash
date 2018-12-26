@@ -9,7 +9,7 @@ import fuzzy from 'fuzzy'
 
 const SearchGridStyled = styled.div`
   display: grid;
-  grid-template-columns: 200px 200px 1fr;
+  grid-template-columns: 200px 200px 150px 1fr;
 `
 
 const SearchInputStyled = styled.input`
@@ -28,7 +28,12 @@ const ClearButtonStyled = styled.button`
   place-self: center left;
 `
 
-function filteredCoins (inputValue, setFilteredCoins, coinList) {
+const FoundAmountStyled = styled.div`
+  ${fontSize2};
+  place-self: center left;
+`
+
+function filterCoins (inputValue, setFilteredCoins, coinList) {
   if (!inputValue) {
     return setFilteredCoins(null)
   }
@@ -65,14 +70,21 @@ export default function Search () {
 
   return (
     <AppContext.Consumer>
-      {({ setFilteredCoins, coinList }) => (
+      {({ setFilteredCoins, coinList, filteredCoins }) => (
         <SearchGridStyled>
+          {console.log(filteredCoins)}
           <h2>Search all coins</h2>
-          <SearchInputStyled onKeyUp={(e) => filteredCoins(e.target.value, setFilteredCoins, coinList)}
+
+          <SearchInputStyled onKeyUp={(e) => filterCoins(e.target.value, setFilteredCoins, coinList)}
                              ref={ref => searchRef = ref}/>
+
           <ClearButtonStyled onClick={() => clearSearch(searchRef, setFilteredCoins)}>
             Clear the search
           </ClearButtonStyled>
+
+          {filteredCoins !== null && (
+            <FoundAmountStyled>was found {Object.keys(filteredCoins).length} coins</FoundAmountStyled>)
+          }
         </SearchGridStyled>
       )}
     </AppContext.Consumer>
