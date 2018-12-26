@@ -29,7 +29,7 @@ export default function CoinTile ({ coinKey, topSection }) {
         let wasRendered = true
         if (!wasRenderedForSymbol.has(coin.Symbol)) {
           wasRenderedForSymbol.add(coin.Symbol)
-          wasRendered = false
+          // wasRendered = false
         }
 
         return (
