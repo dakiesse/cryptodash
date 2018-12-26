@@ -25,7 +25,7 @@ export default function ConfirmButton () {
     <AppContext.Consumer>
       {(context) => (
         <CenterBlock>
-          <ConfirmButtonStyled onClick={context.setFavorites}>
+          <ConfirmButtonStyled onClick={context.confirmFavorites}>
             Confirm favorites
           </ConfirmButtonStyled>
         </CenterBlock>

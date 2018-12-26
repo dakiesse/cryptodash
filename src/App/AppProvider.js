@@ -28,8 +28,10 @@ export default class AppProvider extends React.Component {
 
   actionNavigate = (page) => this.setState({ page })
 
-  actionSetFavorites = () => {
-    this.setState({ isFirstVisit: false }, () => {
+  actionConfirmFavorites = () => {
+    const currentFavorite = this.state.favorites.values().next().value
+
+    this.setState({ isFirstVisit: false, currentFavorite }, () => {
       this.fetchPrices()
       this.persistState()
     })
@@ -101,7 +103,7 @@ export default class AppProvider extends React.Component {
     return {
       ...this.state,
       navigate: this.actionNavigate,
-      setFavorites: this.actionSetFavorites,
+      confirmFavorites: this.actionConfirmFavorites,
       hasFavorites: this.actionHasFavorites,
       addCoin: this.actionAddCoin,
       removeCoin: this.actionRemoveCoin,
