@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactHighchart from 'react-highcharts'
-import HighchartConfig from './HighchartsConfig'
+import ReactHighcharts from 'react-highcharts'
+import HighchartsConfig from './HighchartsConfig'
 import { AppContext } from '../App/AppProvider'
 import { Tile } from '../Shared/Tile'
 
@@ -9,7 +9,7 @@ export default function PriceChart () {
     <AppContext.Consumer>
       {() => (
         <Tile>
-          <ReactHighchart config={HighchartConfig()}/>
+          <ReactHighcharts config={HighchartsConfig()}/>
         </Tile>
       )}
     </AppContext.Consumer>
