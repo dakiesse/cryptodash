@@ -48,7 +48,7 @@ export default class AppProvider extends React.Component {
 
   actionAddCoin = (coinKey) => {
     let favorites = new Set(this.state.favorites)
-    if (favorites.size < MAX_FAVORITES) {
+    if (favorites.size <= MAX_FAVORITES) {
       favorites.delete(coinKey) // for sending to the end
       favorites.add(coinKey)
 
