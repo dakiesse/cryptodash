@@ -5,12 +5,14 @@ import Page from '../Shared/Page'
 import CoinGrid from './CoinGrid'
 import Search from './Search'
 
-export default () => (
-  <Page name={'settings'}>
-    <WelcomeMessage/>
-    <CoinGrid topSection/>
-    <ConfirmButton/>
-    <Search/>
-    <CoinGrid/>
-  </Page>
-)
+export default function Settings () {
+  return (
+    <Page name={'settings'}>
+      <WelcomeMessage/>
+      <CoinGrid topSection/>
+      <ConfirmButton/>
+      <Search/>
+      <CoinGrid/>
+    </Page>
+  )
+}

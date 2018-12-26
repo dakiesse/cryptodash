@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppProvider } from './AppProvider'
+import AppProvider from './AppProvider'
 import AppLayout from './AppLayout'
 import Content from '../Shared/Content'
 import AppBar from './AppBar'

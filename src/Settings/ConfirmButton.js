@@ -20,14 +20,16 @@ const CenterBlock = styled.div`
   justify-content: center;
 `
 
-export default () => (
-  <AppContext.Consumer>
-    {(context) => (
-      <CenterBlock>
-        <ConfirmButtonStyled onClick={context.setFavorites}>
-          Confirm favorites
-        </ConfirmButtonStyled>
-      </CenterBlock>
-    )}
-  </AppContext.Consumer>
-)
+export default function ConfirmButton () {
+  return (
+    <AppContext.Consumer>
+      {(context) => (
+        <CenterBlock>
+          <ConfirmButtonStyled onClick={context.setFavorites}>
+            Confirm favorites
+          </ConfirmButtonStyled>
+        </CenterBlock>
+      )}
+    </AppContext.Consumer>
+  )
+}

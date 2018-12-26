@@ -60,7 +60,7 @@ const handlerFilter = _debounce((inputValue, setFilteredCoins, coinList) => {
   setFilteredCoins(filteredCoins)
 }, 300)
 
-export default () => {
+export default function Search () {
   let searchRef
 
   return (
@@ -77,5 +77,4 @@ export default () => {
       )}
     </AppContext.Consumer>
   )
-
 }

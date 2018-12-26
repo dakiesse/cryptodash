@@ -21,7 +21,7 @@ const DeleteIcon = styled.div`
   }
 `
 
-export default ({ name, symbol, topSection }) => {
+export default function CoinHeaderGrid ({ name, symbol, topSection }) {
   const rightSectionComponent = topSection
     ? (<DeleteIcon>X</DeleteIcon>)
     : (<CoinSymbol>{symbol}</CoinSymbol>)

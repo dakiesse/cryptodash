@@ -4,7 +4,7 @@ import cc from 'cryptocompare'
 export const AppContext = React.createContext()
 const MAX_FAVORITES = 10
 
-export class AppProvider extends React.Component {
+export default class AppProvider extends React.Component {
   defaultState = {
     page: 'dashboard',
     isFirstVisit: true,

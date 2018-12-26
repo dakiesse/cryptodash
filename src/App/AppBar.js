@@ -28,11 +28,13 @@ const NavigationButton = ({ navkey, name }) => (
   </AppContext.Consumer>
 )
 
-export default () => (
-  <Bar>
-    <Logo>CryptoDash</Logo>
-    <div/>
-    <NavigationButton navkey="dashboard" name="Dashboard"/>
-    <NavigationButton navkey="settings" name="Settings"/>
-  </Bar>
-)
+export default function AppBar () {
+  return (
+    <Bar>
+      <Logo>CryptoDash</Logo>
+      <div/>
+      <NavigationButton navkey="dashboard" name="Dashboard"/>
+      <NavigationButton navkey="settings" name="Settings"/>
+    </Bar>
+  )
+}

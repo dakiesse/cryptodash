@@ -18,7 +18,7 @@ function getCoinsToDisplay (coinList, topSection, favorites, filteredCoins) {
   return topSection ? Array.from(favorites) : geLowerSectionCoins(coinList, filteredCoins)
 }
 
-export default ({ topSection = false }) => {
+export default function CoinGrid ({ topSection = false }) {
   return (
     <AppContext.Consumer>
       {({ coinList, favorites, filteredCoins }) => (
