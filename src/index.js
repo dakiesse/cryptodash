@@ -4,6 +4,8 @@ import './index.css'
 import Index from './App'
 import * as serviceWorker from './serviceWorker'
 
+console.log('React version:', React.version)
+
 ReactDOM.render(<Index/>, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change

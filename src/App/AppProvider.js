@@ -15,9 +15,8 @@ export class AppProvider extends React.Component {
   state = { ...this.getSavedState() }
 
   async componentDidMount () {
-    const coinList = (await cc.coinList()).Data
-
-    this.setState({ coinList })
+    this.fetchCoins()
+    this.fetchPrices()
   }
 
   actionNavigate = (page) => this.setState({ page })
@@ -46,6 +45,8 @@ export class AppProvider extends React.Component {
     this.setState({ favorites })
   }
 
+  actionSetFilteredCoins = (filteredCoins) => this.setState({ filteredCoins })
+
   getSavedState () {
     const restoredState = JSON.parse(localStorage.getItem('state'))
 
@@ -63,6 +64,29 @@ export class AppProvider extends React.Component {
     localStorage.setItem('state', json)
   }
 
+  fetchCoins = async () => {
+    const coinList = (await cc.coinList()).Data
+    this.setState({ coinList })
+  }
+
+  fetchPrices = async () => {
+    let prices = []
+
+    let promises = Array.from(this.state.favorites).map((coinSymbol) => {
+      return cc.priceFull(coinSymbol, 'USD')
+    })
+
+    // permit in .then() for Promise.all =)
+    promises = promises.map(p => p.catch((error) => ({ error })))
+
+    const coinPrices = await Promise.all(promises)
+    prices = prices
+      .concat(coinPrices)
+      .filter(data => !Boolean(data.error))
+
+    this.setState({ prices })
+  }
+
   createContext () {
     return {
       ...this.state,
@@ -71,6 +95,7 @@ export class AppProvider extends React.Component {
       hasFavorites: this.actionHasFavorites,
       addCoin: this.actionAddCoin,
       removeCoin: this.actionRemoveCoin,
+      setFilteredCoins: this.actionSetFilteredCoins,
     }
   }
 
