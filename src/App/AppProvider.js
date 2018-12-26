@@ -9,9 +9,10 @@ export default class AppProvider extends React.Component {
     page: 'dashboard',
     isFirstVisit: true,
     coinList: null,
-    prices: null,
+    prices: [],
     filteredCoins: null,
-    favorites: new Set(['BTC', 'ETH', 'DOGE', 'LTC', 'XRP'])
+    favorites: new Set(['BTC', 'ETH', 'DOGE', 'LTC', 'XRP']),
+    currentFavorite: 'BTC',
   }
 
   state = { ...this.getSavedState() }
@@ -39,6 +40,10 @@ export default class AppProvider extends React.Component {
 
   actionHasFavorites = (key) => {
     return this.state.favorites.has(key)
+  }
+
+  actionSetCurrentFavorite = (symbol) => {
+    this.setState({ currentFavorite: symbol }, this.persistState)
   }
 
   actionAddCoin = (coinKey) => {
@@ -70,8 +75,8 @@ export default class AppProvider extends React.Component {
   }
 
   persistState () {
-    const { favorites, isFirstVisit } = this.state
-    const json = JSON.stringify({ favorites: Array.from(favorites), isFirstVisit })
+    const { favorites, currentFavorite, isFirstVisit } = this.state
+    const json = JSON.stringify({ favorites: Array.from(favorites), isFirstVisit, currentFavorite })
 
     localStorage.setItem('state', json)
   }
@@ -105,6 +110,7 @@ export default class AppProvider extends React.Component {
       navigate: this.actionNavigate,
       confirmFavorites: this.actionConfirmFavorites,
       hasFavorites: this.actionHasFavorites,
+      setCurrentFavorite: this.actionSetCurrentFavorite,
       addCoin: this.actionAddCoin,
       removeCoin: this.actionRemoveCoin,
       setFilteredCoins: this.actionSetFilteredCoins,
