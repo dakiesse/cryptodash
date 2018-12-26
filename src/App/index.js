@@ -4,6 +4,7 @@ import AppLayout from './AppLayout'
 import Content from '../Shared/Content'
 import AppBar from './AppBar'
 import Settings from '../Settings'
+import Dashboard from '../Dashboard'
 import './App.css'
 
 class Index extends Component {
@@ -14,6 +15,7 @@ class Index extends Component {
           <AppBar/>
           <Content>
             <Settings/>
+            <Dashboard/>
           </Content>
         </AppProvider>
       </AppLayout>

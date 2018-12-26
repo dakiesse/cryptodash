@@ -9,20 +9,30 @@ export default class AppProvider extends React.Component {
     page: 'dashboard',
     isFirstVisit: true,
     coinList: null,
+    prices: null,
+    filteredCoins: null,
     favorites: new Set(['BTC', 'ETH', 'DOGE', 'LTC', 'XRP'])
   }
 
   state = { ...this.getSavedState() }
 
   async componentDidMount () {
+    const { isFirstVisit } = this.state
+
     this.fetchCoins()
-    this.fetchPrices()
+
+    if (!isFirstVisit) {
+      this.fetchPrices()
+    }
   }
 
   actionNavigate = (page) => this.setState({ page })
 
   actionSetFavorites = () => {
-    this.setState({ isFirstVisit: false }, this.persistState)
+    this.setState({ isFirstVisit: false }, () => {
+      this.fetchPrices()
+      this.persistState()
+    })
   }
 
   actionHasFavorites = (key) => {
