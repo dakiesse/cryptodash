@@ -1,15 +1,26 @@
 import React from 'react'
+import styled, { css } from 'styled-components'
 import { LazyImage } from 'react-lazy-images'
 
 const loaderUrl = 'https://samherbert.net/svg-loaders/svg-loaders/oval.svg'
 
-export default function CoinImage ({ coin, style, wasRendered = false }) {
+const CoinImageStyled = styled.img`
+  height: 50px;
+  
+  ${props => props.spotlight && css`
+    height: 200px;
+    margin: auto;
+    display: block;
+  `}
+`
+
+export default function CoinImage ({ coin, style, spotlight, wasRendered = false }) {
   const imageLink = `http://cryptocompare.com/${coin.ImageUrl}`
   style = style || { height: '50px' }
 
   if (wasRendered) {
     return (
-      <img src={imageLink} alt={coin.CoinSymbol} style={style}/>
+      <CoinImageStyled spotlight={spotlight} src={imageLink} alt={coin.CoinSymbol}/>
     )
   }
 
