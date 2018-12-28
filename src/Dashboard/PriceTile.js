@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { SelectableTile } from '../Shared/Tile'
-import { fontSize3, fontSizeBig, greenBoxShadow } from '../Shared/Styles'
+import { fontSize2, fontSizeBig, greenBoxShadow } from '../Shared/Styles'
 import { CoinHeaderGridStyled } from '../Settings/CoinHeaderGrid'
 import { AppContext } from '../App/AppProvider'
 
@@ -20,7 +20,12 @@ const TickerPrice = styled.div`
 
 const PriceTileStyled = styled(SelectableTile)`
   ${props => props.compact && css`
-    ${fontSize3}
+    ${fontSize2}
+    
+    ${TickerPrice} {
+      ${fontSize2};
+      justify-self: center;
+    }
   `}
   
   ${props => props.selected && css`
@@ -35,21 +40,31 @@ export default ({ price, index }) => {
 
   return (
     <AppContext.Consumer>
-      {({ currentFavorite, setCurrentFavorite }) => (
-        <PriceTileStyled compact={index > 4}
-                         selected={currentFavorite === symbol}
-                         onClick={() => setCurrentFavorite(symbol)}>
-          <CoinHeaderGridStyled>
-            <div>{symbol}</div>
+      {({ currentFavorite, setCurrentFavorite }) => {
+        const isCompact = index > 4
 
-            <ChangePercent isDecreased={data.CHANGEPCT24HOUR < 0}>
-              {numFormat(data.CHANGEPCT24HOUR)}
-            </ChangePercent>
-          </CoinHeaderGridStyled>
+        return (
+          <PriceTileStyled compact={isCompact}
+                           selected={currentFavorite === symbol}
+                           onClick={() => setCurrentFavorite(symbol)}>
+            <CoinHeaderGridStyled compact={isCompact}>
+              <div>{symbol}</div>
 
-          <TickerPrice>${numFormat(data.PRICE)}</TickerPrice>
-        </PriceTileStyled>
-      )}
+              {isCompact && (
+                <TickerPrice>${numFormat(data.PRICE)}</TickerPrice>
+              )}
+
+              <ChangePercent isDecreased={data.CHANGEPCT24HOUR < 0}>
+                {numFormat(data.CHANGEPCT24HOUR)}
+              </ChangePercent>
+            </CoinHeaderGridStyled>
+
+            {!isCompact && (
+              <TickerPrice>${numFormat(data.PRICE)}</TickerPrice>
+            )}
+          </PriceTileStyled>
+        )
+      }}
     </AppContext.Consumer>
   )
 }

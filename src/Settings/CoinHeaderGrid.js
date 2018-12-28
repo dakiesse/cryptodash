@@ -1,10 +1,14 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { DeletableTile } from '../Shared/Tile'
 
 export const CoinHeaderGridStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  
+  ${props => props.compact && css`
+    grid-template-columns: 1fr 1fr 1fr;
+  `}
 `
 
 export const CoinSymbol = styled.div`
