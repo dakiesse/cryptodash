@@ -55,7 +55,7 @@ export default ({ price, index }) => {
               )}
 
               <ChangePercent isDecreased={data.CHANGEPCT24HOUR < 0}>
-                {numFormat(data.CHANGEPCT24HOUR)}
+                {numFormat(data.CHANGEPCT24HOUR)}%
               </ChangePercent>
             </CoinHeaderGridStyled>
 

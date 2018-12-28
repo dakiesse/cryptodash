@@ -1,8 +1,11 @@
 import React from 'react'
 import cc from 'cryptocompare'
+import moment from 'moment'
+import convertHistoricalToHighchartsData from '../Utils/convertHistoricalToHighchartsData'
 
 export const AppContext = React.createContext()
 const MAX_FAVORITES = 10
+const TIME_UNITS = 10
 
 export default class AppProvider extends React.Component {
   defaultState = {
@@ -10,6 +13,7 @@ export default class AppProvider extends React.Component {
     isFirstVisit: true,
     coinList: null,
     prices: [],
+    historical: null,
     filteredCoins: null,
     favorites: new Set(['BTC', 'ETH', 'DOGE', 'LTC', 'XRP']),
     currentFavorite: 'BTC',
@@ -24,6 +28,7 @@ export default class AppProvider extends React.Component {
 
     if (!isFirstVisit) {
       this.fetchPrices()
+      this.fetchHistorical()
     }
   }
 
@@ -32,7 +37,7 @@ export default class AppProvider extends React.Component {
   actionConfirmFavorites = () => {
     const currentFavorite = this.state.favorites.values().next().value
 
-    this.setState({ isFirstVisit: false, currentFavorite }, () => {
+    this.setState({ isFirstVisit: false, currentFavorite, historical: null }, () => {
       this.fetchPrices()
       this.persistState()
     })
@@ -43,7 +48,10 @@ export default class AppProvider extends React.Component {
   }
 
   actionSetCurrentFavorite = (symbol) => {
-    this.setState({ currentFavorite: symbol }, this.persistState)
+    this.setState({ currentFavorite: symbol, historical: null }, () => {
+      this.fetchHistorical()
+      this.persistState()
+    })
   }
 
   actionAddCoin = (coinKey) => {
@@ -102,6 +110,25 @@ export default class AppProvider extends React.Component {
       .filter(data => !Boolean(data.error))
 
     this.setState({ prices })
+  }
+
+  fetchHistorical = async () => {
+    const promises = []
+    const { currentFavorite } = this.state
+
+    for (let units = TIME_UNITS; units > 0; units--) {
+      const promise = cc.priceHistorical(
+        currentFavorite,
+        ['USD'],
+        moment().subtract({ months: units }).toDate()
+      )
+
+      promises.push(promise)
+    }
+
+    const historical = await Promise.all(promises)
+
+    this.setState({ historical: convertHistoricalToHighchartsData(historical, currentFavorite, TIME_UNITS) })
   }
 
   createContext () {
