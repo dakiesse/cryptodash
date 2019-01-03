@@ -63,7 +63,7 @@ const handlerFilter = _debounce((inputValue, setFilteredCoins, coinList) => {
   })
 
   setFilteredCoins(filteredCoins)
-}, 300)
+}, 500)
 
 export default function Search () {
   let searchRef
@@ -72,7 +72,6 @@ export default function Search () {
     <AppContext.Consumer>
       {({ setFilteredCoins, coinList, filteredCoins }) => (
         <SearchGridStyled>
-          {console.log(filteredCoins)}
           <h2>Search all coins</h2>
 
           <SearchInputStyled onKeyUp={(e) => filterCoins(e.target.value, setFilteredCoins, coinList)}

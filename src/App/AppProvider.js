@@ -22,14 +22,9 @@ export default class AppProvider extends React.Component {
   state = { ...this.getSavedState() }
 
   async componentDidMount () {
-    const { isFirstVisit } = this.state
-
     this.fetchCoins()
-
-    if (!isFirstVisit) {
-      this.fetchPrices()
-      this.fetchHistorical()
-    }
+    this.fetchPrices()
+    this.fetchHistorical()
   }
 
   actionNavigate = (page) => this.setState({ page })
