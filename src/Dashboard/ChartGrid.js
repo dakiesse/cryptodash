@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export default styled.div.withConfig({ displayNmae: 'ChartGridStyled' })`
+export default styled.div.withConfig({ displayName: 'ChartGridStyled' })`
   display: grid;
   margin-top: 20px;
   grid-gap: 15px;

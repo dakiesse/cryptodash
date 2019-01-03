@@ -17,6 +17,7 @@ export default class AppProvider extends React.Component {
     filteredCoins: null,
     favorites: new Set(['BTC', 'ETH', 'DOGE', 'LTC', 'XRP']),
     currentFavorite: 'BTC',
+    timeInterval: 'months',
   }
 
   state = { ...this.getSavedState() }
@@ -67,6 +68,10 @@ export default class AppProvider extends React.Component {
 
   actionSetFilteredCoins = (filteredCoins) => this.setState({ filteredCoins })
 
+  actionChangeChartSelect = (timeInterval) => {
+    this.setState({ timeInterval, historical: null }, this.fetchHistorical)
+  }
+
   getSavedState () {
     const restoredState = JSON.parse(localStorage.getItem('state'))
 
@@ -109,13 +114,14 @@ export default class AppProvider extends React.Component {
 
   fetchHistorical = async () => {
     const promises = []
-    const { currentFavorite } = this.state
+    const { currentFavorite, timeInterval } = this.state
+    console.log({ timeInterval })
 
     for (let units = TIME_UNITS; units > 0; units--) {
       const promise = cc.priceHistorical(
         currentFavorite,
         ['USD'],
-        moment().subtract({ months: units }).toDate()
+        moment().subtract({ [timeInterval]: units }).toDate()
       )
 
       promises.push(promise)
@@ -123,7 +129,7 @@ export default class AppProvider extends React.Component {
 
     const historical = await Promise.all(promises)
 
-    this.setState({ historical: convertHistoricalToHighchartsData(historical, currentFavorite, TIME_UNITS) })
+    this.setState({ historical: convertHistoricalToHighchartsData(historical, currentFavorite, timeInterval, TIME_UNITS) })
   }
 
   createContext () {
@@ -136,6 +142,7 @@ export default class AppProvider extends React.Component {
       addCoin: this.actionAddCoin,
       removeCoin: this.actionRemoveCoin,
       setFilteredCoins: this.actionSetFilteredCoins,
+      changeChartSelect: this.actionChangeChartSelect,
     }
   }
 
