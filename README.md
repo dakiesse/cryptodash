@@ -1,6 +1,20 @@
 # CryptoDash
 
 This project was bootstrapped with [Create React Index](https://github.com/facebook/create-react-app).
+The project was created as part of my portfolio and not more. The codebase is being covered next things:
+
+1. Modern React Development with React & React Context API for State Management
+2. Build a Complete CryptoCurrency Financial Reporting App
+3. Styled-components v4 : Dynamic CSS-in-JS
+4. HighCharts : Graphing Historical Price Data
+5. CSS Grid : Responsive Layouts
+6. CryptoCompare API : Fetch Real Pricing Data
+7. Moment : Date Manipulation
+8. Lodash : Functional Programming
+9. Create-React-App 2.0 : Boilerplate Quickly
+10. localStorage : Save Coins
+
+It's simple dashboard that has two pages and no external routing.
 
 ## Available Scripts
 
@@ -13,11 +27,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -39,8 +48,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React Index documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
